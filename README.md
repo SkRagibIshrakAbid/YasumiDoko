@@ -44,10 +44,6 @@ git clone https://github.com/your-username/yasumi-doko.git
 
 Contributions are welcome! If you'd like to contribute to Yasumi Doko, please fork the repository, make your changes, and submit a pull request. Ensure to follow the project's coding standards and guidelines.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ---
 
 Feel free to explore the application, customize it to your needs, and share your feedback or suggestions for improvement. Happy motivating! 🚀
