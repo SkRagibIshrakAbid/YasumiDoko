@@ -8,13 +8,17 @@ function getUserPreferences() {
     if(isset($_COOKIE['user_language'])) {
         $preferences['language'] = $_COOKIE['user_language'];
     }
+    if(isset($_COOKIE['weekend_days'])) { // Retrieve weekend days from cookies
+        $preferences['weekend_days'] = $_COOKIE['weekend_days'];
+    }
     return $preferences;
 }
 
 // Function to set user preferences as cookies
-function setUserPreferences($timezone, $language) {
+function setUserPreferences($timezone, $language, $weekendDays) {
     setcookie('user_timezone', $timezone, time() + (86400 * 30), "/"); // 30 days expiration
     setcookie('user_language', $language, time() + (86400 * 30), "/"); // 30 days expiration
+    setcookie('weekend_days', $weekendDays, time() + (86400 * 30), "/"); // Save weekend days to cookies
 }
 
 // Set user preferences if available, otherwise set defaults
@@ -89,6 +93,9 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yasumi Doko</title>
+    <!-- Add link tag for favicon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="imagecropped.png">
+    <!-- Your existing styles and scripts -->
     <style>
         /* Add custom styles */
         body {
@@ -192,6 +199,16 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
                     <option value="ja" <?= ($userLanguage === 'ja') ? 'selected' : '' ?>>Japanese</option>
                     <!-- Add more languages here -->
                 </select><br><br>
+                <label for="weekendDays">Select Weekend Days:</label>
+                <select id="weekendDays" multiple>
+                    <option value="Monday" <?= (in_array('Monday', $weekendDays)) ? 'selected' : '' ?>>Monday</option>
+                    <option value="Tuesday" <?= (in_array('Tuesday', $weekendDays)) ? 'selected' : '' ?>>Tuesday</option>
+                    <option value="Wednesday" <?= (in_array('Wednesday', $weekendDays)) ? 'selected' : '' ?>>Wednesday</option>
+                    <option value="Thursday" <?= (in_array('Thursday', $weekendDays)) ? 'selected' : '' ?>>Thursday</option>
+                    <option value="Friday" <?= (in_array('Friday', $weekendDays)) ? 'selected' : '' ?>>Friday</option>
+                    <option value="Saturday" <?= (in_array('Saturday', $weekendDays)) ? 'selected' : '' ?>>Saturday</option>
+                    <option value="Sunday" <?= (in_array('Sunday', $weekendDays)) ? 'selected' : '' ?>>Sunday</option>
+                </select><br><br>
                 <button onclick="savePreferences()">Save Preferences</button>
             </div>
         </div>
@@ -237,8 +254,10 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
         function savePreferences() {
             var timezone = document.getElementById('timezone').value;
             var language = document.getElementById('language').value;
+            var weekendDays = Array.from(document.getElementById('weekendDays').selectedOptions).map(option => option.value);
             document.cookie = "user_timezone=" + timezone + "; path=/";
             document.cookie = "user_language=" + language + "; path=/";
+            document.cookie = "weekend_days=" + weekendDays.join(',') + "; path=/"; // Save weekend days to cookies
             location.reload(); // Reload the page to apply changes
         }
 
