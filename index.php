@@ -199,17 +199,17 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
                     <option value="ja" <?= ($userLanguage === 'ja') ? 'selected' : '' ?>>Japanese</option>
                     <!-- Add more languages here -->
                 </select><br><br>
-                <label for="weekendDays">Select Weekend Days:</label>
-                <select id="weekendDays" multiple>
-                    <option value="Monday" <?= (in_array('Monday', $weekendDays)) ? 'selected' : '' ?>>Monday</option>
-                    <option value="Tuesday" <?= (in_array('Tuesday', $weekendDays)) ? 'selected' : '' ?>>Tuesday</option>
-                    <option value="Wednesday" <?= (in_array('Wednesday', $weekendDays)) ? 'selected' : '' ?>>Wednesday</option>
-                    <option value="Thursday" <?= (in_array('Thursday', $weekendDays)) ? 'selected' : '' ?>>Thursday</option>
-                    <option value="Friday" <?= (in_array('Friday', $weekendDays)) ? 'selected' : '' ?>>Friday</option>
-                    <option value="Saturday" <?= (in_array('Saturday', $weekendDays)) ? 'selected' : '' ?>>Saturday</option>
-                    <option value="Sunday" <?= (in_array('Sunday', $weekendDays)) ? 'selected' : '' ?>>Sunday</option>
-                </select><br><br>
-                <button onclick="savePreferences()">Save Preferences</button>
+                <div class="card-body">
+                    <label>Select Weekend Days:</label><br>
+                    <input type="checkbox" id="Monday" <?= (in_array('Monday', $weekendDays)) ? 'checked' : '' ?>><label for="Monday">Monday</label><br>
+                    <input type="checkbox" id="Tuesday" <?= (in_array('Tuesday', $weekendDays)) ? 'checked' : '' ?>><label for="Tuesday">Tuesday</label><br>
+                    <input type="checkbox" id="Wednesday" <?= (in_array('Wednesday', $weekendDays)) ? 'checked' : '' ?>><label for="Wednesday">Wednesday</label><br>
+                    <input type="checkbox" id="Thursday" <?= (in_array('Thursday', $weekendDays)) ? 'checked' : '' ?>><label for="Thursday">Thursday</label><br>
+                    <input type="checkbox" id="Friday" <?= (in_array('Friday', $weekendDays)) ? 'checked' : '' ?>><label for="Friday">Friday</label><br>
+                    <input type="checkbox" id="Saturday" <?= (in_array('Saturday', $weekendDays)) ? 'checked' : '' ?>><label for="Saturday">Saturday</label><br>
+                    <input type="checkbox" id="Sunday" <?= (in_array('Sunday', $weekendDays)) ? 'checked' : '' ?>><label for="Sunday">Sunday</label><br>
+                    <button onclick="savePreferences()">Save Preferences</button>
+                </div>
             </div>
         </div>
     </div>
@@ -254,12 +254,18 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
         function savePreferences() {
             var timezone = document.getElementById('timezone').value;
             var language = document.getElementById('language').value;
-            var weekendDays = Array.from(document.getElementById('weekendDays').selectedOptions).map(option => option.value);
+            var weekendDays = [];
+            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(function(day) {
+                if (document.getElementById(day).checked) {
+                    weekendDays.push(day);
+                }
+            });
             document.cookie = "user_timezone=" + timezone + "; path=/";
             document.cookie = "user_language=" + language + "; path=/";
             document.cookie = "weekend_days=" + weekendDays.join(',') + "; path=/"; // Save weekend days to cookies
             location.reload(); // Reload the page to apply changes
         }
+
 
         setInterval(updateClock, 1000);
     </script>
