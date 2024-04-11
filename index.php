@@ -92,7 +92,9 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yasumi Doko</title>
+    <title>YasumiDoko - Track Days Till Weekend | Motivational Quotes</title>
+    <meta name="description" content="Stay motivated and track the days left till the weekend with YasumiDoko. Choose your timezone, language, and weekend days preferences.">
+    <meta name="keywords" content="Yasumi Doko, YasumiDoko, track days till weekend, motivational quotes, user preferences, timezone, language, weekend days, weekend countdown">
     <!-- Add link tag for favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="imagecropped.png">
     <!-- Your existing styles and scripts -->
