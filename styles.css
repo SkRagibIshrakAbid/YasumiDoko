@@ -6,6 +6,7 @@ body {
     margin: 0;
     padding: 0;
     direction: <?= $languageDirection ?>;
+    line-height: 1.2;
 }
 .container {
     padding: 50px;
@@ -64,4 +65,55 @@ footer {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #fff;
     font-size: 18px;
+    line-height: 1.5;
+}
+/* Styling for buttons */
+button {
+    background-color: #4A90E2; /* Green */
+    color: white;
+    padding: 8px 13px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 0.9375rem;
+}
+
+button:hover {
+    background-color: #0075ff;
+}
+
+/* Styling for checkboxes */
+input[type="checkbox"] {
+    transform: scale(1.2); /* Make checkboxes larger */
+    margin-right: 5px;
+}
+
+/* Styling for select dropdowns */
+select {
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    background-color: #4A90E2;
+    color: white;
+    font-weight: 700;
+    font-size: 0.9375rem;
+}
+select:hover {
+    background-color: #0075ff;
+}
+
+/* Styling for hyperlinks */
+a {
+    color: #fff; /* Green */
+    text-decoration: none;
+    background-color: #4A90E2;
+    border-radius: 4px;
+    border: 3px solid #4A90E2;
+
+}
+
+a:hover {
+    background-color: #0075ff;
+    border: 3px solid #0075ff;
 }
