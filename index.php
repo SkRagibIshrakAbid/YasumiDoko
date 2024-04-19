@@ -98,68 +98,7 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
     <!-- Add link tag for favicon -->
     <link rel="icon" type="image/png" sizes="16x16" href="imagecropped.png">
     <!-- Your existing styles and scripts -->
-    <style>
-        /* Add custom styles */
-        body {
-            background: #4A90E2;
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            direction: <?= $languageDirection ?>;
-        }
-        .container {
-            padding: 50px;
-            text-align: center;
-        }
-        .jumbotron {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-radius: 10px;
-            margin-top: 20px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .card-header {
-            background: transparent;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-            color: #fff;
-            font-size: 1.5rem;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .card-body, .card-footer {
-            background: transparent;
-            border: none;
-            color: #fff;
-            font-size: 1.2rem;
-        }
-        .card-body {
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        .card-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            padding-top: 10px;
-            margin-top: 20px;
-            font-style: italic;
-        }
-
-        /* Add media queries for responsiveness */
-        @media only screen and (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            .card {
-                margin-top: 10px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     
@@ -209,67 +148,15 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
                     <input type="checkbox" id="Thursday" <?= (in_array('Thursday', $weekendDays)) ? 'checked' : '' ?>><label for="Thursday">Thursday</label><br>
                     <input type="checkbox" id="Friday" <?= (in_array('Friday', $weekendDays)) ? 'checked' : '' ?>><label for="Friday">Friday</label><br>
                     <input type="checkbox" id="Saturday" <?= (in_array('Saturday', $weekendDays)) ? 'checked' : '' ?>><label for="Saturday">Saturday</label><br>
-                    <input type="checkbox" id="Sunday" <?= (in_array('Sunday', $weekendDays)) ? 'checked' : '' ?>><label for="Sunday">Sunday</label><br>
+                    <input type="checkbox" id="Sunday" <?= (in_array('Sunday', $weekendDays)) ? 'checked' : '' ?>><label for="Sunday">Sunday</label><br><br>
                     <button onclick="savePreferences()">Save Preferences</button>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        var emojis = ['💪', '🚀', '🌟', '😊', '🎉', '🌻'];
-        var emojiPlaceholder = document.getElementById('emojiPlaceholder');
-        
-        function getRandomEmoji() {
-            var randomIndex = Math.floor(Math.random() * emojis.length);
-            return emojis[randomIndex];
-        }
-
-        function updateClock() {
-            var timezone = document.getElementById('timezone').value;
-
-            var now = new Date();
-            var serverTime = new Date(now.toLocaleString('en-US', { timeZone: timezone })); // Adjust server time according to timezone
-
-            var options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric',
-                hour12: true // Use 12-hour format
-            };
-
-            var formattedDate = ('0' + serverTime.getDate()).slice(-2) + '/' + ('0' + (serverTime.getMonth() + 1)).slice(-2) + '/' + serverTime.getFullYear();
-            var hours = serverTime.getHours() % 12 || 12;
-            var ampm = serverTime.getHours() >= 12 ? 'PM' : 'AM';
-            var formattedTime = ('0' + hours).slice(-2) + ':' + ('0' + serverTime.getMinutes()).slice(-2) + ':' + ('0' + serverTime.getSeconds()).slice(-2) + ' ' + ampm;
-
-            var formattedDateTime = formattedDate + ' ' + formattedTime;
-
-            document.getElementById('currentDateTime').textContent = formattedDateTime;
-
-
-            emojiPlaceholder.textContent = getRandomEmoji();
-        }
-
-        function savePreferences() {
-            var timezone = document.getElementById('timezone').value;
-            var language = document.getElementById('language').value;
-            var weekendDays = [];
-            ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].forEach(function(day) {
-                if (document.getElementById(day).checked) {
-                    weekendDays.push(day);
-                }
-            });
-            document.cookie = "user_timezone=" + timezone + "; path=/";
-            document.cookie = "user_language=" + language + "; path=/";
-            document.cookie = "weekend_days=" + weekendDays.join(',') + "; path=/"; // Save weekend days to cookies
-            location.reload(); // Reload the page to apply changes
-        }
-
-
-        setInterval(updateClock, 1000);
-    </script>
+    <footer>
+        &copy; 2024 <a href="https://github.com/SkRagibIshrakAbid">Sk Ragib Ishrak Abid</a>. All rights reserved.
+    </footer>
+    <script src="script.js"></script>
 </body>
 </html>
