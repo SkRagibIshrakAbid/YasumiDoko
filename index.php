@@ -85,6 +85,72 @@ $motivationalQuote = isset($motivationalQuotes[$userLanguage][$dayOfWeek]) ? $mo
 
 // Set language direction for CSS based on user language
 $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
+function getPublicHolidays() {
+    // Define the holidays array
+    $holidays = [
+        "1,Mon,Jan,New Year's Day",
+        "8,Mon,Jan,Coming of Age Day",
+        "11,Sun,Feb,National Foundation Day",
+        "12,Mon,Feb,National Foundation Day Holiday",
+        "21,Wed,Mar,Vernal Equinox Day",
+        "29,Sun,Apr,Shōwa Day",
+        "30,Mon,Apr,Shōwa Day Holiday",
+        "3,Thu,May,Constitution Memorial Day",
+        "4,Fri,May,Greenery Day",
+        "5,Sat,May,Children's Day",
+        "16,Mon,Jul,Marine Day",
+        "11,Sat,Aug,Mountain Day",
+        "17,Mon,Sep,Respect for the Aged Day",
+        "23,Sun,Sep,Autumnal Equinox Day",
+        "24,Mon,Sep,Autumnal Equinox Holiday",
+        "8,Mon,Oct,Health and Sports Day",
+        "3,Sat,Nov,Culture Day",
+        "23,Fri,Nov,Labour Thanksgiving Day",
+        "23,Sun,Dec,The Emperor's Birthday",
+        "24,Mon,Dec,The Emperor's Birthday Holiday"
+    ];
+
+    // Return the holidays array
+    return ['holidays' => $holidays];
+}
+
+// Get public holidays from the hard-coded data
+$publicHolidaysData = getPublicHolidays();
+if ($publicHolidaysData && isset($publicHolidaysData['holidays'])) {
+    $publicHolidays = $publicHolidaysData['holidays']; 
+} else {
+    $publicHolidays = [];
+}
+
+// Get today's date in the format used in the $publicHolidays array
+$today = date('j,D,M');
+
+// Split the date string into components
+$todayComponents = explode(',', $today);
+
+// Reformat the date without the day of the week
+$todayFormatted = '';
+if (count($todayComponents) >= 3) {
+    $todayFormatted = $todayComponents[0] . ',' . $todayComponents[2];
+}
+
+// Extract only the date components from the public holidays array
+$holidaysWithoutNames = array_map(function($holiday) {
+    $components = explode(',', $holiday);
+    
+    return $components[0] . ',' . $components[2];
+}, $publicHolidays);
+
+// Check if today's formatted date is in the list of public holidays
+$isPublicHoliday = in_array($todayFormatted, $holidaysWithoutNames);
+
+// Get the name of the public holiday if today is a holiday
+$publicHolidayName = '';
+if ($isPublicHoliday) {
+    $publicHolidayKey = array_search($todayFormatted, $holidaysWithoutNames);
+    $publicHolidayInfo = explode(',', $publicHolidays[$publicHolidayKey]);
+    $publicHolidayName = $publicHolidayInfo[3];
+}
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +173,17 @@ $languageDirection = ($userLanguage == 'ar') ? 'rtl' : 'ltr';
             <h1 class="display-4">Welcome to Yasumi Doko!</h1>
             <p class="lead">Stay motivated and track the days left till the weekend.</p>
         </div>
+        <?php if ($isPublicHoliday): ?>
+        <div class="card text-center">
+            <div class="card-header">
+                Public Holiday in Japan
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Today is a public holiday in Japan:</h5>
+                <p class="card-text"><?= $publicHolidayName ?></p>
+            </div>
+        </div>
+        <?php endif; ?>
         <div class="card text-center">
             <div class="card-header">
                 Current Date, Time and Weather
