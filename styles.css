@@ -117,3 +117,13 @@ a:hover {
     background-color: #0075ff;
     border: 3px solid #0075ff;
 }
+
+/* Add styles for the canvas */
+canvas {
+    display: block;
+    position: fixed; /* Fixed position to cover the whole viewport */
+    top: 0;
+    left: 0;
+    z-index: -1; /* Place the canvas behind other content */
+    background-color: #4A90E2; /* Same as body background color */
+}
